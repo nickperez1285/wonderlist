@@ -9,7 +9,10 @@ exports.up = function (knex) {
 
  .createTable("todos", tbl => {
       tbl.increments();
-      tbl.string("todo", 128).notNullable();
+      tbl.string("title", 128).notNullable();
+      tbl.string("description", 128).notNullable();
+      tbl.boolean("completed").notNullable();
+	 tbl.timestamp('created_at').defaultTo(knex.fn.now());
     
       tbl
         .integer("user")
