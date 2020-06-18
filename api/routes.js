@@ -14,6 +14,7 @@ router.get("/users", (req, res) => {
 	    .catch(err => res.send(err));
 });
 
+// needs password hashing 
 router.post("/users", (req, res) => {
   	db("users")
   	.insert(req.body)
@@ -40,7 +41,7 @@ router.get("/users/:id/todos", (req, res) => {
 	const userID = req.params.id
 
   	db("todos")
-  	.select("title", "description", "created_at", "user")
+  	.select("title", "description", "created_at", "user", "completed")
   	.where({ id: userID })
 	    .then(todos => {
 	      res.status(200).json(todos);
@@ -55,7 +56,7 @@ router.post("/users/:id/todos",  (req, res) => {
 	const body =req.body
 
 
-  	db("todos").insert(body)
+  	db("todos").insert(body).where(userID)
 
 	    .then(todos => {
 	      res.status(200).json(todos);
