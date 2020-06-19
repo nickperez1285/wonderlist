@@ -17,7 +17,6 @@ get /users/:id/todos
 * gets 1 users todo items 
 
 post /users/:id/todos
-* crreates 1 users todo items * currently not working 
 
 
 test
