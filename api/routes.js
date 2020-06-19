@@ -50,7 +50,7 @@ router.get("/users/:id/todos", (req, res) => {
 
 router.post('/users/:id/todos', (req, res) => {
 	const userID = req.params.id
-	findById(userID)
+	db('users').where({ id: Number(userID) })
     .then(user => {
         if (user) {
             req.body.title  && req.body.description ? 
@@ -76,9 +76,81 @@ router.post('/users/:id/todos', (req, res) => {
     });
 });
 
-function findById(id) {
-  return db('users').where({ id: Number(id) });
-}
+router.get('/todos', (req, res) => {
+	db("todos")
+    .select("id", "title", "description", "user_id", "created_at" )
+    .then((todo) => {
+      res.status(200).json(todo);
+    })
+    .catch((err) => res.send(err));
+
+
+});
+
+router.get('/todos/:id', (req, res) => {
+	const todoID = req.params.id
+	db("todos")
+    .select("id", "title", "description", "user_id", "created_at" )
+    .where({id: todoID })
+    .then((todo) => {
+      res.status(200).json(todo);
+    })
+    .catch((err) => res.send(err));
+
+
+});
+
+router.get('/todos/:id', (req, res) => {
+	const todoID = req.params.id
+	db("todos")
+    .select("id", "title", "description", "user_id", "created_at" )
+    .where({id: todoID })
+    .then((todo) => {
+      res.status(200).json(todo);
+    })
+    .catch((err) => res.send(err));
+
+
+});
+
+router.put('/todos/:id', (req, res) => {
+	const todoID = req.params.id
+	db("todos")
+	.select("id", "title", "description", "user_id", "created_at" )
+    .where('id', Number(todoID))
+    .update(req.body)
+        .then(post => {
+          res.status(201).json(post);
+        })
+        .catch(err => {
+          console.log(err);
+          res.status(500).json({
+            message: "There was an error while saving the     post to the database."
+          });
+        });
+});
+
+router.delete('/todos/:id', (req, res) => {
+const id = req.params.id 
+
+  db('todos')
+    .where('id', Number(id))
+    .del()
+    .then(todos => {
+    	if(todos){
+    		res.status(204).end();
+		}else{
+			res.status(404).json({ message: "The todo with the specified ID does not exist." }) 
+		}	
+    })
+    .catch(error => {
+      res.status(500).json({ error: "The todo could not be removed"  });
+    });
+});
+
+
+
+
 function insertTodo(todo ) {
   return db('todos')
     .insert(todo)
