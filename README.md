@@ -17,6 +17,19 @@ get /users/:id/todos
 * gets 1 users todo items 
 
 post /users/:id/todos
+ * creates 1 todo item 
+
+ get /todos 
+ * gets all todos 
+
+ get /todos/:id 
+ *gets ID'd todo
+
+ put /todos/:id 
+ * updates ID"d todo
+
+ delete /todos/:id 
+ * removes ID'd todo  
 
 
-test
+
