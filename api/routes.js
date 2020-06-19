@@ -60,11 +60,11 @@ router.post('/users/:id/todos', (req, res) => {
                         console.log(err);
                     })
             : res.status(400).json({ 
-                errorMessage: "Please provide text for the comment."
+                errorMessage: "Please add both a title and description."
             });
         } else {
             res.status(404).json({
-                message: "post not found",
+                message: "user not found",
             });
         }
     })
