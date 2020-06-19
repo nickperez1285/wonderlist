@@ -29,7 +29,7 @@ development: {
       max: 10
     },
     migrations: {
-      tableName: "./data/migrations"
+      directory: "./data/migrations"
     },
     seeds: {
       directory: "./data/seeds",
