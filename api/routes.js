@@ -39,29 +39,50 @@ router.get("/users/:id/todos", (req, res) => {
   const userID = req.params.id;
 
   db("todos")
-    .select("title", "description", "created_at", "user", "completed")
-    .where({ id: userID })
+    .select("id", "title", "description", "created_at", "user_id", "completed")
+    .where({ user_id: userID })
     .then((todos) => {
       res.status(200).json(todos);
     })
     .catch((err) => res.send(err));
 });
 
-// not working , cant insert todos into db ?
 
-router.post("/users/:id/todos", (req, res) => {
-  const userID = req.params.id;
-  const body = req.body;
-
-  db("todos")
-    .insert(body)
-    .where(userID)
-
-    .then((todos) => {
-      res.status(200).json(todos);
+router.post('/users/:id/todos', (req, res) => {
+	const userID = req.params.id
+	findById(userID)
+    .then(user => {
+        if (user) {
+            req.body.title  && req.body.description ? 
+                insertTodo({...req.body, user_id: userID})
+                    .then(res.status(200).json(req.body))
+                    .catch(err => {
+                        console.log(err);
+                    })
+            : res.status(400).json({ 
+                errorMessage: "Please provide text for the comment."
+            });
+        } else {
+            res.status(404).json({
+                message: "post not found",
+            });
+        }
     })
-    .catch((err) => res.send(err));
+    .catch((err) => {
+        res.status(500).json({
+            err,
+            message: "Error processing request",
+         });
+    });
 });
 
+function findById(id) {
+  return db('users').where({ id: Number(id) });
+}
+function insertTodo(todo ) {
+  return db('todos')
+    .insert(todo)
+    .where({ user_id: todo.user_id })
+}
 
 module.exports = router;

@@ -12,13 +12,14 @@ exports.up = function (knex) {
       tbl.string("title", 128).notNullable();
       tbl.string("description", 128).notNullable();
       tbl.boolean("completed").notNullable();
-	 tbl.timestamp('created_at').defaultTo(knex.fn.now());
+	    tbl.timestamp('created_at').defaultTo(knex.fn.now());
     
-      tbl
-        .integer("user")
+      tbl.integer('user_id')
         .unsigned()
-        .references("users.id")
-        .onDelete("RESTRICT")
+        .notNullable()
+        .references('id')
+        .inTable('users')
+        .onDelete("CASCADE")
         .onUpdate("CASCADE");
     });
 }
