@@ -1,8 +1,10 @@
 routes 
+base: https://andrei-wonderlist.herokuapp.com/
 
 base route : https://andrei-wonderlist.herokuapp.com/
 
 get /users
+
 * gets all users
 
 post /users
@@ -16,3 +18,6 @@ get /users/:id/todos
 
 post /users/:id/todos
 * crreates 1 users todo items * currently not working 
+
+
+test
