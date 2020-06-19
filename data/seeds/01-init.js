@@ -4,9 +4,5 @@ exports.seed = function(knex) {
         {username: 'test', password:'test'},
       
       ]);
-      return knex('todos').insert([
-        { todo: 'test'
-
-        }
-        ])
+   
 };

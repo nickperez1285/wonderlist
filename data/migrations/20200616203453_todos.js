@@ -17,7 +17,7 @@ exports.up = function (knex) {
       tbl
         .integer("user")
         .unsigned()
-        .references("user.id")
+        .references("users.id")
         .onDelete("RESTRICT")
         .onUpdate("CASCADE");
     });
