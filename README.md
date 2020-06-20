@@ -1,5 +1,4 @@
 routes 
-base: https://andrei-wonderlist.herokuapp.com/
 
 base route : https://andrei-wonderlist.herokuapp.com/
 
@@ -23,13 +22,19 @@ post /users/:id/todos
  * gets all todos 
 
  get /todos/:id 
- *gets ID'd todo
+ * gets ID'd todo
 
- put /todos/:id 
- * updates ID"d todo
+put /todos/:id 
+ * updates ID'd todo
 
  delete /todos/:id 
  * removes ID'd todo  
+
+  delete /users/:id 
+ * removes ID'd user  
+
+  update /users/:id 
+ * updates ID'd user  
 
 
 
