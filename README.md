@@ -1,7 +1,7 @@
 routes 
 
 base route : https://andrei-wonderlist.herokuapp.com/
-or : https://wonderlist.uc.r.appspot.com/
+or : https://wonderlist.uc.r.appspot.com/ (read only )
 
 get /users
 
