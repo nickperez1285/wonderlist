@@ -25,10 +25,16 @@ post /users/:id/todos
  * gets ID'd todo
 
 put /todos/:id 
- * updates ID"'d todo
+ * updates ID'd todo
 
  delete /todos/:id 
  * removes ID'd todo  
+
+  delete /users/:id 
+ * removes ID'd user  
+
+  update /users/:id 
+ * updates ID'd user  
 
 
 
