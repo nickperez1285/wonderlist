@@ -35,6 +35,42 @@ router.get("/users/:id", (req, res) => {
     .catch((err) => res.send(err));
 });
 
+router.put('/users/:id', (req, res) => {
+	const userID = req.params.id
+	db("users")
+	.select("id","users", "password")
+    .where('id', Number(userID))
+    .update(req.body)
+        .then(user => {
+          res.status(201).json(user);
+        })
+        .catch(err => {
+          console.log(err);
+          res.status(500).json({
+            message: "There was an error while saving the   user to the database."
+          });
+        });
+});
+
+router.delete('/users/:id', (req, res) => {
+const id = req.params.id 
+
+  db('users')
+    .where('id', Number(id))
+    .del()
+    .then(user => {
+    	if(user){
+    		res.status(204).end();
+		}else{
+			res.status(404).json({ message: "The user with the specified ID does not exist." }) 
+		}	
+    })
+    .catch(error => {
+      res.status(500).json({ error: "The user could not be removed"  });
+    });
+});
+
+
 router.get("/users/:id/todos", (req, res) => {
   const userID = req.params.id;
 
