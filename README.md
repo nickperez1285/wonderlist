@@ -5,6 +5,9 @@ base route : https://wonderlist.herokuapp.com/
 or 
  https://andrei-wonderlist.herokuapp.com/
 
+post /api/auth/register
+* adds 1 user with encrypted password 
+
 get /users
 
 * gets all users
