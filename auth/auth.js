@@ -25,4 +25,38 @@ router.post("/register", async (req, res, next) => {
   }
 });
 
+router.post("/login", async (req, res, next) => {
+  const authError = {
+    message: "Credentials Invalid",
+  };
+
+  try {
+    const user = await userAssistance
+      .findBy({ username: req.body.username })
+      .first();
+    if (!user) {
+      res.status(401).json(authError);
+    }
+    const password = req.body.password;
+    const passwordValid = await bcrypt.compare(password, user.password);
+
+    if (!passwordValid) {
+      res.status(401).json(authError);
+    }
+
+    const tokenPayload = {
+      userId: user.id,
+      role: "authorized",
+    };
+
+    res.cookie("token", jwt.sign(tokenPayload, process.env.JWT_SECRET));
+
+    res.json({
+      message: `Welcome ${user.username}`,
+    });
+  } catch (error) {
+    next(error);
+  }
+});
+
 module.exports = router;
