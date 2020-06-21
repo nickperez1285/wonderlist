@@ -6,7 +6,10 @@ or
  https://andrei-wonderlist.herokuapp.com/
 
 post /api/auth/register
-* adds 1 user with encrypted password 
+* adds 1 user with encrypted password
+
+ post /api/auth/login
+* logins user 
 
 get /users
 
@@ -24,6 +27,7 @@ get /users/:id/todos
 post /users/:id/todos
  * creates 1 todo item 
 
+<!-- not working on heroku -->
  get /todos 
  * gets all todos 
 
@@ -41,6 +45,7 @@ put /todos/:id
 
   update /users/:id 
  * updates ID'd user  
+
 
 
 
