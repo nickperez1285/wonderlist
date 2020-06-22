@@ -12,57 +12,46 @@ describe('Ensures Test are Running in Test ENV', () => {
 
 describe('Checks - endpoints for todo', () => {
 
-    const initialLength = "2";
-
-    it('Server Is Running', () => {
+    it('_GET_ At root, api is up', () => {
         return testServer
-                .get('/')
-                .expect(200)
-                .expect('Content-Type', /json/)
-                .then(res => {
-                    expect(res.body.api).toBe('up')
-                })
-    })
-    it('_GET_ All todos', () => {
-        return testServer
-                .get('/todos')
-                .expect(200)
-                .expect('Content-Type', /json/)
-                .expect('Content-Length', initialLength)
+            .get('/')
+            .expect(200)
+            .then(res => {
+                expect(res.body.api).toBe('up')
+            })
     })
 
-    describe('Checks - Behind User Wall', () => {
+    beforeEach(async () => {
+        await db('users').truncate();
+    });
+
+    describe('Checks - endpoints behind Auth Wall', () => {
 
         const sampleUser = {
-            username : 'jestUser',
-            password : 'jestPassword'
-        }
+                username : 'jestUser',
+                password : 'jestPassword'
+            }
 
         const sampleTodo = {
-            title: "Jest Todo",
-            description: "Jest Desc",
-            completed: 0,
-            user: 1
-        }
+                title: "Jest Todo",
+                description: "Jest Desc",
+                completed: 0,
+                user: 1
+            }
 
-        beforeEach(async () => {
-            await db('users').truncate();
-        });
 
-        it('_POST_ Register New User', () => {
+        it('_POST_ Registers new user', () => {
             return testServer
-                    .post('/api/auth/register')
-                    .send(sampleUser)
-                    .expect(200)
+                .post('/api/auth/register')
+                .send(sampleUser)
+                .expect(200)
         })
 
-        it('_POST_ Logs-in with sampleUser', () => {
+        it('_POST_ Login User', () => {
             return testServer
-                    .post('/api/auth/login')
-                    .send(sampleUser)
-                    .expect(200)
+                .post('/api/auth/login')
+                .send(sampleUser)
+                .expect(200)
         })
-
-    })
-    
+    })      
 })
