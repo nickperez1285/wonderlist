@@ -8,6 +8,7 @@ router.post("/register", async (req, res, next) => {
     const { username } = req.body;
     const invalidUser = await userAssistance.findBy({ username }).first();
 
+
     if (invalidUser) {
       res
         .status(409)
