@@ -13,15 +13,15 @@ router.get("/users", (req, res) => {
     .catch((err) => res.send(err));
 });
 
-// needs password hashing
-router.post("/users", (req, res) => {
-  db("users")
-    .insert(req.body)
-    .then((users) => {
-      res.status(200).json(users);
-    })
-    .catch((err) => res.send(err));
-});
+// used in auth routes 
+// router.post("/users", (req, res) => {
+//   db("users")
+//     .insert(req.body)
+//     .then((users) => {
+//       res.status(200).json(users);
+//     })
+//     .catch((err) => res.send(err));
+// });
 
 router.get("/users/:id", (req, res) => {
   const userID = req.params.id;
@@ -43,7 +43,7 @@ router.put("/users/:id", (req, res) => {
     .where("id", Number(userID))
     .update(req.body)
     .then((user) => {
-      res.status(201).json(user);
+      res.status(202).json(user);
     })
     .catch((err) => {
       console.log(err);
@@ -93,7 +93,7 @@ router.post("/users/:id/todos", (req, res) => {
       if (user) {
         req.body.title && req.body.description
           ? insertTodo({ ...req.body, user_id: userID })
-              .then(res.status(200).json(req.body))
+              .then(res.status(201).json(req.body))
               .catch((err) => {
                 console.log(err);
               })
@@ -152,7 +152,7 @@ router.put("/todos/:id", (req, res) => {
     .where("id", Number(todoID))
     .update(req.body)
     .then((post) => {
-      res.status(201).json(post);
+      res.status(202).json(post);
     })
     .catch((err) => {
       console.log(err);
