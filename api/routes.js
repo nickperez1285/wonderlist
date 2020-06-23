@@ -13,15 +13,15 @@ router.get("/users", (req, res) => {
     .catch((err) => res.send(err));
 });
 
-// needs password hashing
-router.post("/users", (req, res) => {
-  db("users")
-    .insert(req.body)
-    .then((users) => {
-      res.status(200).json(users);
-    })
-    .catch((err) => res.send(err));
-});
+// used in auth routes 
+// router.post("/users", (req, res) => {
+//   db("users")
+//     .insert(req.body)
+//     .then((users) => {
+//       res.status(200).json(users);
+//     })
+//     .catch((err) => res.send(err));
+// });
 
 router.get("/users/:id", (req, res) => {
   const userID = req.params.id;
