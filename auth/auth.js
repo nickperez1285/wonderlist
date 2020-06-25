@@ -21,7 +21,7 @@ router.post("/register", async (req, res, next) => {
 
     res.status(200).json(newUser.id);
   } catch (error) {
-    console.log(error);
+    // console.log(error);
   }
 });
 
@@ -49,12 +49,13 @@ router.post("/login", async (req, res, next) => {
       role: "authorized",
     };
 
-    res.cookie("token", jwt.sign(tokenPayload, process.env.JWT_SECRET));
+    res.cookie("token", jwt.sign(tokenPayload, process.env.JWT_SECRET || "testing"));
 
     res.status(200).json({
       message: `Welcome ${user.username}`,
     });
   } catch (error) {
+    console.log(error)
     next(error);
   }
 });

@@ -14,7 +14,7 @@ async function add(user) {
 
     return findById(id);
   } catch (error) {
-    console.log(error);
+    // console.log(error);
   }
 }
 
