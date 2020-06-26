@@ -3,10 +3,12 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const userAssistance = require("./auth-helper.js");
 
+
 router.post("/register", async (req, res, next) => {
   try {
     const { username } = req.body;
     const invalidUser = await userAssistance.findBy({ username }).first();
+
 
     if (invalidUser) {
       res

@@ -3,7 +3,7 @@ const bcrypt = require("bcryptjs");
 const db = require("../data/dbConfig.js");
 const authorized = require("../middleware/authorized.js");
 
-router.get("/users", (req, res) => {
+router.get("/users", authorized(), (req, res) => {
   db("users")
     .select("id", "username", "password")
     .orderBy("id")
@@ -85,7 +85,7 @@ router.get("/users/:id/todos", (req, res) => {
     .catch((err) => res.send(err));
 });
 
-router.post("/users/:id/todos", (req, res) => {
+router.post("/users/:id/todos", authorized(), (req, res) => {
   const userID = req.params.id;
   db("users")
     .where({ id: Number(userID) })
