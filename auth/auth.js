@@ -23,7 +23,7 @@ router.post("/register", async (req, res, next) => {
 
     res.status(200).json(newUser.id);
   } catch (error) {
-    console.log(error);
+    // console.log(error);
   }
 });
 
@@ -37,13 +37,13 @@ router.post("/login", async (req, res, next) => {
       .findBy({ username: req.body.username })
       .first();
     if (!user) {
-      res.status(401).json(authError);
+      res.status(401).json({message : "Bad user"});
     }
     const password = req.body.password;
     const passwordValid = await bcrypt.compare(password, user.password);
 
     if (!passwordValid) {
-      res.status(401).json(authError);
+      res.status(401).json({message : "Bad Pass"});
     }
 
     const tokenPayload = {
@@ -51,12 +51,13 @@ router.post("/login", async (req, res, next) => {
       role: "authorized",
     };
 
-    res.cookie("token", jwt.sign(tokenPayload, process.env.JWT_SECRET));
+    res.cookie("token", jwt.sign(tokenPayload, process.env.JWT_SECRET || "testing"));
 
-    res.json({
+    res.status(200).json({
       message: `Welcome ${user.username}`,
     });
   } catch (error) {
+    console.log(error)
     next(error);
   }
 });

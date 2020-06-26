@@ -7,12 +7,12 @@ const cookieParcer = require("cookie-parser");
 
 server.use(express.json());
 server.use(cookieParcer());
-// server.use("/", routes);
+server.use("/", routes);
 server.use("/api/auth", authRoutes);
-server.use(function(req,res,next){ req.name = "john"});
+// server.use(function(req,res,next){ req.name = "john"});
 
 server.get("/", (req, res) => {
-  res.json({ name: req.name });
+  res.status(200).json({ api: 'up' });
 });
 
 module.exports = server;
